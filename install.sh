@@ -22,6 +22,7 @@ sudo install -m 755 system/wifi-watchdog.sh /usr/local/sbin/wifi-watchdog.sh
 sudo install -m 644 system/wifi-watchdog.service system/wifi-watchdog.timer /etc/systemd/system/
 sudo install -d /var/log/journal
 sudo systemctl restart systemd-journald
+sudo journalctl --flush  # start writing to /var/log/journal now, not only after a reboot
 sudo systemctl daemon-reexec  # applies the hardware watchdog setting
 sudo systemctl reload NetworkManager
 sudo /sbin/iw dev wlan0 set power_save off 2>/dev/null || true  # apply now without reconnecting
