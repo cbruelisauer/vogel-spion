@@ -4,6 +4,8 @@
 VOGEL_PORT=8000
 VOGEL_STREAM_SIZE=1280x720
 VOGEL_STREAM_FPS=15
+# Live view data rate in bit/s (2500000 = 2.5 Mbit/s). Higher = sharper, but more load on Wi-Fi.
+VOGEL_STREAM_BITRATE=2500000
 # Empty = full 12 MP sensor resolution (falls back to 2304x1296 if memory is short)
 VOGEL_STILL_SIZE=
 VOGEL_STILL_QUALITY=90

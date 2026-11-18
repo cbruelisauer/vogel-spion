@@ -45,6 +45,8 @@ CONFIG = {
     "port": int(os.environ.get("VOGEL_PORT", "8000")),
     "stream_size": _env_size("VOGEL_STREAM_SIZE", "1280x720"),
     "stream_fps": float(os.environ.get("VOGEL_STREAM_FPS", "15")),
+    # Live view data rate in bit/s. ~7 Mbit/s overloaded a busy 2.4 GHz network.
+    "stream_bitrate": int(float(os.environ.get("VOGEL_STREAM_BITRATE", "2500000"))),
     # Empty = full sensor resolution; falls back to FALLBACK_STILL_SIZE if memory is short.
     "still_size": _env_size("VOGEL_STILL_SIZE", ""),
     "still_quality": int(os.environ.get("VOGEL_STILL_QUALITY", "90")),
@@ -116,13 +118,12 @@ class Camera:
 
     def __init__(self, config, ir):
         from picamera2 import Picamera2  # imported here so --help etc. work without it
-        from picamera2.encoders import MJPEGEncoder, Quality
+        from picamera2.encoders import MJPEGEncoder
         from picamera2.outputs import FileOutput
         from libcamera import Transform, controls
 
         self._Picamera2 = Picamera2
         self._MJPEGEncoder = MJPEGEncoder
-        self._Quality = Quality
         self._FileOutput = FileOutput
         self._controls = controls
         self._transform = Transform(hflip=1, vflip=1) if config["flip"] else Transform()
@@ -185,11 +186,11 @@ class Camera:
         )
         self._picam.configure(video)
         self._apply_focus()
-        self._picam.start_recording(
-            self._MJPEGEncoder(), self._FileOutput(self.buffer), quality=self._Quality.MEDIUM
-        )
+        bitrate = self.cfg["stream_bitrate"]
+        self._picam.start_recording(self._MJPEGEncoder(bitrate=bitrate), self._FileOutput(self.buffer))
         self._streaming = True
-        log.info("Streaming %sx%s @ %s fps", size[0], size[1], self.cfg["stream_fps"])
+        log.info("Streaming %sx%s @ %s fps, %.1f Mbit/s",
+                 size[0], size[1], self.cfg["stream_fps"], bitrate / 1e6)
 
     def _stop_stream(self):
         if self._streaming:
