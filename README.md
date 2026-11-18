@@ -3,7 +3,7 @@
 Web camera for a Raspberry Pi Zero W + Camera Module 3 (NoIR) in a nest box.
 Open `http://<pi-name>.local:8000/` in a browser on the home network:
 
-- **Live view** (MJPEG, 1280×720 @ 15 fps, hardware encoded)
+- **Live view** (MJPEG, 1280×720 @ 10 fps, hardware encoded)
 - **Take photo**: full 12 MP still, shown in the browser to save on the PC (nothing stored on the Pi)
 - **Focus**: continuous autofocus or a fixed lens position (slider)
 

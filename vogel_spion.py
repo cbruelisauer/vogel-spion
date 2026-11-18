@@ -44,7 +44,7 @@ def _env_focus(name, default):
 CONFIG = {
     "port": int(os.environ.get("VOGEL_PORT", "8000")),
     "stream_size": _env_size("VOGEL_STREAM_SIZE", "1280x720"),
-    "stream_fps": float(os.environ.get("VOGEL_STREAM_FPS", "15")),
+    "stream_fps": float(os.environ.get("VOGEL_STREAM_FPS", "10")),
     # Live view data rate in bit/s. ~7 Mbit/s overloaded a busy 2.4 GHz network.
     "stream_bitrate": int(float(os.environ.get("VOGEL_STREAM_BITRATE", "2500000"))),
     # Empty = full sensor resolution; falls back to FALLBACK_STILL_SIZE if memory is short.
