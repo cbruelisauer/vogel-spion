@@ -25,6 +25,16 @@ and enables the `vogel-spion` systemd service. To update: `git pull && ./install
 
 Logs: `journalctl -u vogel-spion -f`
 
+`install.sh` also hardens the Pi for running unattended (files in [system/](system/)):
+
+- **Wi-Fi power save off.** Power saving makes the Pi Zero W drop off the network.
+- **Persistent logs** (max 50 MB), so `journalctl -b -1` shows what happened before a crash or reboot.
+- **Hardware watchdog:** the Pi reboots by itself if the system hangs.
+- **Wi-Fi watchdog:** if the router doesn't answer, Wi-Fi is restarted every 3 minutes, and
+  the Pi reboots after 15 minutes without a connection. See `journalctl -t wifi-watchdog`.
+
+Booting takes about 2.5 minutes on a Pi Zero W before it is reachable.
+
 ## Settings
 
 Edit `/etc/default/vogel-spion`, then run `sudo systemctl restart vogel-spion`. See
