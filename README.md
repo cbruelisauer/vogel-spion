@@ -12,13 +12,16 @@ the window closes the stream, and the Pi turns the camera off 3 s later.
 
 ## Install on the Pi (Raspberry Pi OS Bookworm Lite)
 
+On the Pi:
+
 ```bash
-rsync -a --exclude .git ./ <user>@<pi-name>.local:vogel-spion/
-ssh <user>@<pi-name>.local 'cd vogel-spion && ./install.sh'
+sudo apt-get install -y git
+git clone https://github.com/cbruelisauer/vogel-spion.git
+cd vogel-spion && ./install.sh
 ```
 
 `install.sh` installs `python3-picamera2` if missing, copies the app to `/opt/vogel-spion`,
-and enables the `vogel-spion` systemd service. Run it again to update.
+and enables the `vogel-spion` systemd service. To update: `git pull && ./install.sh`.
 
 Logs: `journalctl -u vogel-spion -f`
 
