@@ -1,0 +1,17 @@
+[Unit]
+Description=Vogel-Spion on-demand camera web server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=@USER@
+SupplementaryGroups=video gpio
+WorkingDirectory=/opt/vogel-spion
+# Override settings (VOGEL_PORT, VOGEL_FOCUS, VOGEL_IR_GPIO, ...) in this file:
+EnvironmentFile=-/etc/default/vogel-spion
+ExecStart=/usr/bin/python3 /opt/vogel-spion/vogel_spion.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

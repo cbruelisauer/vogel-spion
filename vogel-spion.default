@@ -1,0 +1,17 @@
+# vogel-spion settings (installed to /etc/default/vogel-spion).
+# After editing: sudo systemctl restart vogel-spion
+
+VOGEL_PORT=8000
+VOGEL_STREAM_SIZE=1280x720
+VOGEL_STREAM_FPS=15
+# Empty = full 12 MP sensor resolution (falls back to 2304x1296 if memory is short)
+VOGEL_STILL_SIZE=
+VOGEL_STILL_QUALITY=90
+# "auto" = continuous autofocus, or a lens position in dioptres (100 / distance in cm, e.g. 8 ≈ 12.5 cm)
+VOGEL_FOCUS=auto
+# 1 = rotate image 180°
+VOGEL_FLIP=0
+# Seconds the camera stays on after the last viewer leaves
+VOGEL_STOP_DELAY=3
+# GPIO pin (BCM number) switching the IR light. Leave empty when no IR light is connected.
+VOGEL_IR_GPIO=
